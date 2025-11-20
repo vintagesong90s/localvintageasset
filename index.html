@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로컬 빈티지 자산 큐레이터 - 지역의 오래된 미래를 발견하세요</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #1a1612;
+            color: #F5F5DC;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 22, 18, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #F5F5DC;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #B8860B;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            background: linear-gradient(180deg, #2a1f1a 0%, #1a1612 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(184, 134, 11, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(204, 119, 34, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 20px rgba(184, 134, 11, 0.5));
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+            background: linear-gradient(135deg, #F5F5DC 0%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #d4c5a9;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #B8860B;
+            font-weight: 600;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            display: block;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Problem Section */
+        .problem-content {
+            background: rgba(44, 35, 28, 0.7);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            padding: 4rem 3rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .problem-intro {
+            font-size: 1.2rem;
+            color: #CC7722;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+
+        .problem-list {
+            display: grid;
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .problem-item {
+            padding-left: 2rem;
+            border-left: 3px solid #B8860B;
+        }
+
+        .problem-item h3 {
+            color: #B8860B;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Solution Section */
+        .solution-content {
+            background: linear-gradient(135deg, rgba(44, 35, 28, 0.8) 0%, rgba(26, 22, 18, 0.9) 100%);
+            padding: 4rem 3rem;
+            border-radius: 8px;
+            border: 1px solid rgba(204, 119, 34, 0.4);
+        }
+
+        .solution-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .solution-item {
+            padding: 2rem;
+            background: rgba(184, 134, 11, 0.05);
+            border-radius: 6px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .solution-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2);
+        }
+
+        .solution-item h3 {
+            color: #CC7722;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: rgba(44, 35, 28, 0.6);
+            padding: 3rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: #B8860B;
+            box-shadow: 0 0 30px rgba(184, 134, 11, 0.3);
+        }
+
+        .benefit-number {
+            font-size: 3rem;
+            color: #B8860B;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            color: #CC7722;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Trust Section */
+        .trust-content {
+            background: rgba(184, 134, 11, 0.1);
+            padding: 4rem 3rem;
+            border-radius: 8px;
+            border: 2px solid rgba(184, 134, 11, 0.3);
+        }
+
+        .trust-items {
+            display: grid;
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .trust-item {
+            padding: 2rem;
+            background: rgba(26, 22, 18, 0.7);
+            border-radius: 6px;
+            border-left: 4px solid #CC7722;
+        }
+
+        .trust-item h3 {
+            color: #B8860B;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Pricing Section */
+        .pricing-table {
+            background: rgba(44, 35, 28, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(184, 134, 11, 0.4);
+            margin-top: 3rem;
+        }
+
+        .pricing-header {
+            background: linear-gradient(135deg, #8B6914 0%, #B8860B 50%, #CC7722 100%);
+            color: #1a1612;
+            padding: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .pricing-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.2);
+            align-items: center;
+        }
+
+        .pricing-row:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-item {
+            font-weight: 600;
+        }
+
+        .pricing-beta {
+            color: #CC7722;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .pricing-regular {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.2) 0%, rgba(204, 119, 34, 0.1) 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(184, 134, 11, 0.3);
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #B8860B;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Button */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B6914 0%, #B8860B 50%, #CC7722 100%);
+            color: #1a1612;
+            padding: 1.5rem 4rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1612;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(184, 134, 11, 0.2);
+        }
+
+        footer p {
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: #B8860B;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            .problem-content,
+            .solution-content,
+            .trust-content {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .pricing-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .btn-primary {
+                padding: 1.2rem 2.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#problem">문제</a></li>
+            <li><a href="#solution">솔루션</a></li>
+            <li><a href="#benefits">혜택</a></li>
+            <li><a href="#trust">신뢰</a></li>
+            <li><a href="#pricing">가격</a></li>
+            <li><a href="#cta">신청</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">🕰️</div>
+            <h1>투자 가치가 있는<br>'지역의 오래된 미래'를 발견하세요</h1>
+            <p class="hero-subtitle">
+                빈티지 수집품을 취향을 넘어,<br>
+                정밀한 데이터 기반 자산 포트폴리오의 새로운 대안으로 제시합니다
+            </p>
+            <a href="#cta" class="btn-primary">🔥 무료 가치 분석 신청하기</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem">
+        <span class="section-icon">❓</span>
+        <h2 class="section-title">당신의 탐구 욕구는 아직 지역에 닿지 못했습니다</h2>
+        <div class="problem-content">
+            <p class="problem-intro">20-30대 얼리어답터 및 안목 있는 투자자님께,</p>
+            <p>우리는 늘 새로운 가치와 투자 대안을 찾아 헤맵니다. 하지만 지역 상권의 공실 점포에는 평범하거나, 당신의 차별화된 탐구 욕구와 지적 호기심을 충족시킬 만한 특색 있는 콘텐츠가 극히 부족합니다.</p>
+            
+            <div class="problem-list">
+                <div class="problem-item">
+                    <h3>취향 불만</h3>
+                    <p>온라인에서만 만족해야 하는 당신의 빈티지/수집품에 대한 갈망.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>투자 불만</h3>
+                    <p>주식, 부동산 외에 희소성을 자산으로 전환할 새로운 포트폴리오의 부재.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>지역 공허</h3>
+                    <p>지역 상권의 고유성을 잃고 점차 늘어나는 유휴 공간의 무관심.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 3rem; font-size: 1.1rem; color: #CC7722; font-style: italic;">
+                우리는 알고 있습니다. 당신은 단순히 '물건'이 아닌 '이야기'와 '미래 가치'를 수집하고 있다는 것을요.
+            </p>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution">
+        <span class="section-icon">✨</span>
+        <h2 class="section-title">지역 유휴 공간을 '가치 저장소'로 재탄생시키다</h2>
+        <div class="solution-content">
+            <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem; color: #CC7722;">
+                로컬 빈티지 자산 큐레이터는 지역의 문제를 당신의 새로운 기회로 연결합니다.
+            </p>
+            <p style="text-align: center; margin-bottom: 3rem;">
+                우리는 유휴 점포를 당신의 수집품을 투자 가치 있는 자산으로 직접 확인하고 거래할 수 있는 프리미엄 팝업 갤러리/트레이딩 룸으로 전환합니다.
+            </p>
+
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <h3>핵심 가치</h3>
+                    <p>지역 유휴 공간에 '투자 가치가 있는 빈티지 수집품'을 전시/판매하고, 이를 자산 포트폴리오의 새로운 대안으로 제시하여 지역 상권에 특색 있는 경제 활력을 불어넣습니다.</p>
+                </div>
+                <div class="solution-item">
+                    <h3>큐레이터의 역할</h3>
+                    <p>일반 투자 상품 외에 수집 물품에 대한 데이터 분석 기반의 포트폴리오 설계 및 가치 자문 서비스를 연계합니다.</p>
+                </div>
+                <div class="solution-item">
+                    <h3>당신을 위한 공간</h3>
+                    <p>단순히 물건을 파는 곳이 아닌, 희소성 있는 물품의 배경지식을 공유하고 안목을 키우는 고급 커뮤니티 공간을 제공합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits">
+        <span class="section-icon">💎</span>
+        <h2 class="section-title">당신이 선택해야 하는 3가지 이유</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <span class="benefit-number">Ⅰ</span>
+                <h3>데이터 기반 투자 포트폴리오 자문</h3>
+                <p>감(感)이 아닌, 데이터 기반의 선수 분석 최적화 기술을 활용하여 수집 물품의 현재 및 잠재적 시장 가치를 정밀하게 분석하고 컨설팅합니다.</p>
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-number">Ⅱ</span>
+                <h3>프리미엄 유휴 공간 팝업 갤러리</h3>
+                <p>지역 내 엄선된 유휴 점포를 활용하여, 당신의 소장품(위탁) 또는 큐레이터가 확보한 투자 가치가 입증된 빈티지 자산을 안전하고 품격 있게 전시/거래할 기회를 제공합니다.</p>
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-number">Ⅲ</span>
+                <h3>차별화된 커뮤니티 및 정보 공유</h3>
+                <p>20-30대 얼리어답터 및 수집가들이 오프라인에서 탐구 욕구를 충족시키고, 투자 인사이트를 교환할 수 있는 정기적인 트레이딩 세션 및 네트워킹을 운영합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section id="trust">
+        <span class="section-icon">🤝</span>
+        <h2 class="section-title">지역과 함께, 가치를 검증합니다</h2>
+        <div class="trust-content">
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 3rem;">
+                저희는 이 서비스의 시장 수용도를 확신하며, 실질적인 가치 창출을 위해 아래와 같은 검증 계획을 실행합니다.
+            </p>
+
+            <div class="trust-items">
+                <div class="trust-item">
+                    <h3>MVP 계획 (최소 실행)</h3>
+                    <p>유휴 점포 1곳을 임시 팝업 스토어로 활용하여, 창직자 소유의 투자 가치 있는 빈티지/수집품을 전시하고 소규모 트레이딩 세션을 운영합니다.</p>
+                </div>
+                <div class="trust-item">
+                    <h3>첫 번째 검증 대상</h3>
+                    <p>20-30대 얼리어답터 그룹을 대상으로 초기 수용도 및 핵심 니즈(투자 가치, 탐구 욕구 충족)를 집중 검증합니다.</p>
+                </div>
+                <div class="trust-item">
+                    <h3>필수 협력 기관</h3>
+                    <p><strong>지역 내 도시재생 지원센터:</strong> 안정적인 유휴 점포 확보 및 활용 관련 행정/공간 지원<br><br>
+                    <strong>시장 상인회:</strong> 기존 상권과의 조화로운 관계 형성 및 상생 방안 모색</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 3rem; text-align: center; font-size: 1.1rem; color: #CC7722;">
+                우리의 목표는 단순한 거래를 넘어, 지역의 공실 문제 해결 및 상권의 고유한 특색을 확보하여 지속 가능한 정주 환경에 기여하는 것입니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <span class="section-icon">🌟</span>
+        <h2 class="section-title">[선착순 30명 한정] 초기 베타 테스터 특별 혜택</h2>
+        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 3rem;">
+            로컬 빈티지 자산 큐레이터 서비스의 초기 고객이 되어, 차별화된 가치를 가장 먼저 경험하십시오.
+        </p>
+
+        <div class="pricing-table">
+            <div class="pricing-header">베타 테스터 특별 가격</div>
+            <div class="pricing-row">
+                <div class="pricing-item">투자 가치 분석 리포트 (1회)</div>
+                <div class="pricing-beta">무료 (0원)</div>
+                <div class="pricing-regular">50,000원</div>
+            </div>
+            <div class="pricing-row">
+                <div class="pricing-item">첫 위탁 판매 수수료</div>
+                <div class="pricing-beta">18% (10% 할인)</div>
+                <div class="pricing-regular">20%</div>
+            </div>
+            <div class="pricing-row">
+                <div class="pricing-item">프리미엄 트레이딩 세션 참석</div>
+                <div class="pricing-beta">3회 무료 (선착순)</div>
+                <div class="pricing-regular">회당 30,000원</div>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 3rem; font-size: 1.1rem; font-style: italic; color: #CC7722;">
+            이 기회는 당신의 수집품을 '취미'에서 '자산'으로 격상시킬 가장 빠른 길입니다.<br>
+            지금 신청하고 독점적인 가이드를 받으십시오.
+        </p>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">지역의 유휴 공간에<br>당신의 가치를 투자하세요</h2>
+            <p class="cta-text">
+                빈티지 자산의 미래는 현재의 데이터와 당신의 안목이 만날 때 시작됩니다.<br><br>
+                공실 점포의 셔터가 내려가기만을 기다리지 마십시오.<br>
+                그 공간을 당신의 투자 포트폴리오를 전시하는 갤러리로 활용하십시오.<br><br>
+                지금 바로 초기 베타 테스터에 지원하여,<br>
+                당신의 수집품이 가진 숨겨진 투자 가치 분석 리포트를 무료로 받으세요.
+            </p>
+            <a href="mailto:vintagehunter@email.com" class="btn-primary">
+                🔥 선착순 마감 임박! 무료 가치 분석 리포트 신청하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>서비스 협력 및 파트너십 문의</p>
+        <p><a href="mailto:vintagehunter@email.com">vintagehunter@email.com</a></p>
+        <p style="margin-top: 2rem; font-size: 0.9rem;">© 2024 로컬 빈티지 자산 큐레이터. All rights reserved.</p>
+    </footer>
+</body>
+</html>
